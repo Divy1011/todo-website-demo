@@ -1,0 +1,10 @@
+1 make new todo page add in sidebar
+2 sidebar open todo then only show list of todoes where each has edit and delete button 
+3 add ADD button right corner redirect to todo add form
+4 make todo edit page sapreate 
+5 add validations and show error message for each input
+6 if delete todo then popup for confirmation are you sure like  
+
+
+if (!name || !email || !task) return;
+    onUpdate({ ...todo, name, email, task });

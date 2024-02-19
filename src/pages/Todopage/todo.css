@@ -1,0 +1,18 @@
+ul {
+  list-style-type: none;
+}
+
+.Addform{
+  padding-top: 30px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.frmgrp{
+  letter-spacing: normal;
+  border: 2px;
+}
+
+Form.Control{
+  border: 7px;
+}

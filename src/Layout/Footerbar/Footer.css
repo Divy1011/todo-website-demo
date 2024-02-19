@@ -1,0 +1,13 @@
+.footer-dark {
+    background-color: #3c454e;
+    color: #ffffff;
+    padding: 10px 0;
+  }
+  
+  .footer-text {
+    margin-bottom: 0;
+  }
+  .icons{
+    font-size: 30px;
+    float: right;
+  }
