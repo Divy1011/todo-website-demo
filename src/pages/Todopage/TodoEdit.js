@@ -4,6 +4,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const TodoEdit = () => {
+  useEffect(() => {
+    document.title = "Edit Todo"
+  }, [])
   const { id } = useParams(); // Retrieve the id parameter from the URL
   const navigate = useNavigate(); // Access the history object
   const {

@@ -1,106 +1,71 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBars,
+  faTimes,
+  faCogs,
+  faList,
+  faUser,
+  faListAlt,
+  faPhone
+} from "@fortawesome/free-solid-svg-icons"; 
 import "./Sidebar.css";
-import {
-  IconButton,
-  Drawer,
-  Card,
-} from "@material-tailwind/react";
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-
+import { useNavigate } from "react-router-dom";
 
 const SideMenu = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const history = useNavigate();
 
-  const openDrawer = () => setIsDrawerOpen(true);
-  const closeDrawer = () => setIsDrawerOpen(false);
+  const handleTrigger = () => setIsOpen(!isOpen);
 
+  const redirectToHome = () => {
+
+    history("/"); 
+  };
+  const redirectToabout = () => {
+    history("/about");
+  };
+  const redirectTocontact = () => {
+    history("/contactus");
+  };
+  const redirectToservice = () => {
+    history("/services");
+  };
+  const redirectTotodolist = () => {
+    history("/todolist");
+  };
   return (
-    <>
-      <div className="sidebar-toggle">
-        <IconButton 
-          variant="text" 
-          size="md" 
-          onClick={openDrawer} 
-          className="toggle-button"
-        >
-          {isDrawerOpen ? (
-            <XMarkIcon className="h-4 w-4 stroke-current" />
-          ) : (
-            <Bars3Icon className="h-5 w-6 stroke-current" />
-          )}
-        </IconButton>
+    <div className="App">
+      <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
+        <div className="trigger" onClick={handleTrigger}>
+          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+        </div>
+
+        <div className="sidebar-position" onClick={redirectToHome}>
+          <div>
+            <FontAwesomeIcon icon={faUser} />
+          </div>
+          <span>Home</span>
+        </div>
+        <div className="sidebar-position" onClick={redirectToabout}>
+          <FontAwesomeIcon icon={faCogs} />
+          <span>About</span>
+        </div>
+        <div className="sidebar-position" onClick={redirectTocontact}>
+          <FontAwesomeIcon icon={faPhone} />
+          <span>ContactUs</span>
+        </div>
+
+        <div className="sidebar-position" onClick={redirectToservice}>
+          <FontAwesomeIcon icon={faList} />
+          <span>Services</span>
+        </div>
+        <div className="sidebar-position" onClick={redirectTotodolist}>
+          <FontAwesomeIcon icon={faListAlt} />
+          <span>Todo</span>
+        </div>
       </div>
-      <div className="menu">
-      <Drawer open={isDrawerOpen} onClose={closeDrawer}>
-        <Card  shadow={false} className="card">
-          <Nav defaultActiveKey="/" className="nav">
-            <ul className="list-group">
-              <li className="list-group-item">
-                <Nav.Link as={NavLink} to="/" >
-                  Home
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/About" >
-                  About
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/contactus">
-                  Contact Us
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/services">
-                  Services
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/todolist">
-                  ToDo
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/About">
-                  products
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/About">
-                  Branches
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/About">
-                  Locate US
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/contactus">
-                  add anything
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/contactus">
-                 xyz
-                </Nav.Link>
-              </li>
-              <li className="list-group-item ">
-                <Nav.Link as={NavLink} to="/contactus">
-                  
-                </Nav.Link>
-              </li>
-            </ul>
-          </Nav>
-        </Card>
-      </Drawer>
-      </div>
-    </>
+    </div>
   );
 };
 

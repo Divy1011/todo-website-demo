@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaInstagram, FaFacebookSquare, FaGithub } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./About.css"
 
 const About = () => {
+  useEffect(() => {
+    document.title = "About"
+  }, [])
   return (
     <div className="about-container">
       <h1>About Us</h1>

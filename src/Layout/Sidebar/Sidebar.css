@@ -1,49 +1,72 @@
- SideMenu.css
-
-
-ul{
-  color:#3c454e !important;
-  background-color: rgb(0, 0, 0) !important;
-} 
-li{
-  background-color: transparent !important;
-  border: 0 !important ;
-  color: white !important;
+*{
+  box-sizing: border-box;
 }
 
-.btn{
-  margin-top: 20px;
-}
-.sidebar-toggle {
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  margin-top: 6px;
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
 }
 
-.toggle-button {
-  background-color: #000000; /* Button background color */
-  border: 1px solid #000000; /* Button border color */ /* Button border radius */
-  transition: background-color 0.3s, border-color 0.3s;
+
+.sidebar {
+  position: fixed;
   width: 50px;
-  color: white;
+  height: 100%;
+  background-color: #2a363b;
+  transition: width 0.3s ease;
+  border-right: 1px #4d606e solid;
+  padding-top: 15px;
 }
 
-.toggle-button:hover {
-  background-color: #1d268c; /* Button background color on hover */
-  border-color: #000000; /* Button border color on hover */
+.sidebar .sidebar-position {
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  text-align: left;
 }
 
+.sidebar .sidebar-position:hover {
+  background-color: #3f5159;
+  border-right: 5px #e84a5f solid;
+}
 
-.nav{
-  border: 0 !important;
-  border-color: bla ck !important ;
-  background-color: #000000 !important;
+.sidebar svg {
+  color: #ffffff;
+  min-width: 25px;
 }
-.menu{
-  height: 72vh !important;
+
+.sidebar span {
+  width: 0;
+  height: 0;
+  padding: 0 15px;
+  transition: width 0.3s ease;
+  color: #c9c9c9;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.card{
-  background-color: #000000 !important;
-  border: 0 !important;
+
+.sidebar--open {
+  width: 200px;
+  transition: width 0.3s ease;
+}
+
+.sidebar--open .sidebar-position span {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.trigger {
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 12px 15px;
 }

@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const TodoList = () => {
+  useEffect(() => {
+    document.title = "TodoList"
+  }, [])
   
   const [todos, setTodos] = React.useState([]);
 
@@ -18,6 +22,7 @@ const TodoList = () => {
       setTodos(updatedTodos);
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
     }
+    toast.success("Todo deleted sucessfully")
   };
 
   const deleteAll = () => {
@@ -25,8 +30,10 @@ const TodoList = () => {
     if (shouldDeleteAll) {
       setTodos([]);
       localStorage.removeItem("todos");
+      
       // Perform any other necessary actions upon deleting all todos
     }
+    toast.success("Todos deleted sucessfully")
   };
 
   return (

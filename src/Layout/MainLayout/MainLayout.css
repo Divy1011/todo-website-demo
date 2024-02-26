@@ -1,40 +1,73 @@
-div{
-  display:block ;
-}
-
 .body {
-  height:calc(100vh - 115px); /* Adjust 64px according to the height of your header */
-  overflow: auto; /* Hide the scrollbar */
-flex-wrap: wrap;
-margin:0
-
+  height: 100vh;
+  width: 100%;
+  padding: 0%;
+  margin: 0%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 }
-
-.side{
-  max-width:max-content;
-  position: sticky;
-  padding: 0;
-  height: 100%;
-  background-color: black;
-}
-.header{
-  position: sticky;
-  height: 50px;
-  padding: 0;
-  background-color: #3c454e !important;
-}
-.content{
-  text-align: center;
-  height: max-content;
- padding-left: 10px;
- 
-
-}
-.main-wrapper{
+.bar{
+  z-index: 1;
   overflow: hidden;
-  padding: 0%;;
-}
-.footer{
-  overflow: hidden  ;
   position: sticky;
+}
+
+.main {
+  margin-top: 50px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  overflow: auto;
+}
+
+.sidemenu {
+  width: 13%;
+  margin-right: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+
+.header,
+.footer {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+
+.header {
+  height: 20px; /* Assuming header height is 20px */
+  top: 0;
+}
+
+.footer {
+  height: 60px; /* Assuming footer height is 60px */
+  bottom: -18px;
+}
+
+@media screen and (max-width: 768px) {
+  .sidemenu {
+    width: 10%; /* Adjust as needed */
+  } 
+}
+
+@media screen and (max-width: 622) {
+  .sidemenu {
+    width: 5%; /* Adjust as needed */
+  } 
+  .content{
+    font-size: xx-small !important;
+    flex-wrap: wrap;
+    min-width: 40px;
+  }
+  .content{
+    display: none !important ;
+  }
 }

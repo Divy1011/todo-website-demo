@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "./todo.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Todo = () => {
-  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Add Todo"
+  }, [])
+ 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm(); // Capture reset function
+  const [, setMsg] = useState(null); // State for toast message
+
   const onSubmit = (data) => {
     // Construct the todo item
     const todoItem = {
       ...data,
       id: Date.now(),
     };
-
+   
     // Save the todo item to localStorage
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
     localStorage.setItem("todos", JSON.stringify([...storedTodos, todoItem]));
@@ -26,15 +32,18 @@ const Todo = () => {
     // Clear the input fields
     reset(); // Call reset function to clear form fields
 
-    // Navigate to the desired page
-    navigate("/todolist");
-  };
+    // Show toast notification
+    setMsg("Todo Added Successfully");
+    toast.success("Todo Added Successfully");
 
+    // Navigate to the desired page
+  }
   return (
-    <div>
+    <div className="container">
       <h2>
         <strong>Add Todo</strong>
       </h2>
+      <ToastContainer position="top-center"/>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="formName" className="my-4">
           <Form.Label>Name</Form.Label>
@@ -78,7 +87,7 @@ const Todo = () => {
           </Form.Text>
         </Form.Group>
 
-        <Button className="btn btn-primary my-4 " type="submit">
+        <Button className="btn btn-primary my-4" type="submit">
           Add Todo
         </Button>
       </Form>

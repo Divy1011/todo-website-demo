@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Homepage.css"
 import image from "./home.svg"
 const HomePage = () => {
+  useEffect(() => {
+    document.title = "Home"
+  }, [])
   return (
     <div className="container">
     <h1>Home page </h1>
