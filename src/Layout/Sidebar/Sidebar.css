@@ -1,34 +1,49 @@
-/* SideMenu.css */
-.sidemenu {
-  background-color: #000000;
-  width: 180px;
-  padding: 10px;
-  height: 100%;
-  
-}
+ SideMenu.css
 
-.sidemenu nav ul {
-  list-style-type: none;
-  padding:0
-}
-
-.sidemenu nav ul li {
-  position: relative;
-  margin-bottom: 30px;
- text-align: center;
-  width: auto;
-}
-
-.sidemenu nav ul li a {
-  text-decoration: none;
-  color: #333;
-}
-
-.sidemenu nav ul li a:hover {
-  color: #5d5b5b;
-}
 
 ul{
-  color: black;
-  background-color: rgb(0, 0, 0);
+  color:#3c454e !important;
+  background-color: rgb(0, 0, 0) !important;
 } 
+li{
+  background-color: transparent !important;
+  border: 0 !important ;
+  color: white !important;
+}
+
+.btn{
+  margin-top: 20px;
+}
+.sidebar-toggle {
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 6px;
+}
+
+.toggle-button {
+  background-color: #000000; /* Button background color */
+  border: 1px solid #000000; /* Button border color */ /* Button border radius */
+  transition: background-color 0.3s, border-color 0.3s;
+  width: 50px;
+  color: white;
+}
+
+.toggle-button:hover {
+  background-color: #1d268c; /* Button background color on hover */
+  border-color: #000000; /* Button border color on hover */
+}
+
+
+.nav{
+  border: 0 !important;
+  border-color: bla ck !important ;
+  background-color: #000000 !important;
+}
+.menu{
+  height: 72vh !important;
+}
+.card{
+  background-color: #000000 !important;
+  border: 0 !important;
+}

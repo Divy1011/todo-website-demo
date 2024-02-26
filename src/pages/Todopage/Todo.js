@@ -1,71 +1,84 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import "./todo.css";
 
-const Todo = ({ onAdd }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [todo, setTodo] = useState('');
-
-  const handleAdd = () => {
-    if (!name || !email || !todo) return;
-
+const Todo = () => {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm(); // Capture reset function
+  const onSubmit = (data) => {
     // Construct the todo item
     const todoItem = {
-      id: Date.now(), // Use a unique identifier for the todo item
-      name,
-      email,
-      todo
+      ...data,
+      id: Date.now(),
     };
 
     // Save the todo item to localStorage
-    const storedTodos = JSON.parse(localStorage.getItem('todos')) || [];
-    localStorage.setItem('todos', JSON.stringify([...storedTodos, todoItem]));
-
-    // Call the onAdd function with the todo item
-    onAdd(todoItem);
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
+    localStorage.setItem("todos", JSON.stringify([...storedTodos, todoItem]));
 
     // Clear the input fields
-    setName('');
-    setEmail('');
-    setTodo('');
+    reset(); // Call reset function to clear form fields
+
+    // Navigate to the desired page
+    navigate("/todolist");
   };
 
   return (
     <div>
-      <h2><strong>Add Todo</strong></h2>
-      <Form>
-        <Form.Group controlId="formName" className='my-4'>
+      <h2>
+        <strong>Add Todo</strong>
+      </h2>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group controlId="formName" className="my-4">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            {...register("name", {
+              required: "Name is required",
+              pattern: {
+                value: /^[A-Za-z\s]+$/, // Regex to allow only letters and spaces
+                message: "Name must contain only letters and spaces",
+              },
+            })}
           />
+          <Form.Text className="text-danger h4">
+            {errors.name && errors.name.message}
+          </Form.Text>
         </Form.Group>
 
-        <Form.Group controlId="formEmail" className='my-4'>
+        <Form.Group controlId="formEmail" className="my-4">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email", { required: "Email is required" })}
           />
+          <Form.Text className="text-danger h4">
+            {errors.email && errors.email.message}
+          </Form.Text>
         </Form.Group>
 
-        <Form.Group controlId="formTodo" className='my-4'>
+        <Form.Group controlId="formTodo" className="my-4">
           <Form.Label>Todo</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter todo"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
+            placeholder="Enter Todo"
+            {...register("todo", { required: "Todo is required" })}
           />
+          <Form.Text className="text-danger h4">
+            {errors.todo && errors.todo.message}
+          </Form.Text>
         </Form.Group>
 
-        <Button className='btn my-5' variant="danger" onClick={handleAdd} as={NavLink} to="/todolist">
+        <Button className="btn btn-primary my-4 " type="submit">
           Add Todo
         </Button>
       </Form>

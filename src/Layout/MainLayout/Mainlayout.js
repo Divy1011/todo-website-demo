@@ -17,10 +17,10 @@ const Mainlayout = () => {
         </Col>
       </Row>
       <Row className="body">
-        <Col sm={2} className="side">
+        <Col className="side">
           <SideMenu />
         </Col>
-        <Col sm={10} className="content">
+        <Col className="content">
           <Outlet />
         </Col>
       </Row>

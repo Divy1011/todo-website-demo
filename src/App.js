@@ -1,11 +1,13 @@
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from "./Layout/layout";
 function App() {
   return (
-    <BrowserRouter>
+    
+    <HashRouter>
       <Layout />
-    </BrowserRouter>
+      </HashRouter>
+   
   );
 }
 

@@ -1,26 +1,40 @@
-.max-height-container {
-  max-height: 100vh; /* Adjust this value according to your requirements */
+div{
+  display:block ;
 }
 
-.body{
-  height: 82vh;
-  overflow: auto;
+.body {
+  height:calc(100vh - 115px); /* Adjust 64px according to the height of your header */
+  overflow: auto; /* Hide the scrollbar */
+flex-wrap: wrap;
+margin:0
+
 }
+
 .side{
   max-width:max-content;
   position: sticky;
+  padding: 0;
+  height: 100%;
+  background-color: black;
 }
 .header{
   position: sticky;
+  height: 50px;
+  padding: 0;
+  background-color: #3c454e !important;
 }
 .content{
   text-align: center;
+  height: max-content;
+ padding-left: 10px;
+ 
 
 }
 .main-wrapper{
-  overflow: auto;
+  overflow: hidden;
+  padding: 0%;;
 }
 .footer{
-  overflow: auto;
+  overflow: hidden  ;
   position: sticky;
 }

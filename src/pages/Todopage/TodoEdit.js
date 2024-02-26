@@ -1,58 +1,111 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
-const TodoEdit = ({ onUpdate, location }) => {
-  // Provide default values for todo properties
-  const initialTodo = location.state ? location.state.todo : { name: "", email: "", task: "" };
-  const [name, setName] = useState(initialTodo.name);
-  const [email, setEmail] = useState(initialTodo.email);
-  const [task, setTask] = useState(initialTodo.task);
+const TodoEdit = () => {
+  const { id } = useParams(); // Retrieve the id parameter from the URL
+  const navigate = useNavigate(); // Access the history object
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleUpdate = () => {
-    const updatedTodo = {
-      id: initialTodo.id, // Preserve the ID of the todo
-      name: name,
-      email: email,
-      task: task
+  useEffect(() => {
+    const fetchTodoById = async () => {
+      try {
+        // Retrieve todos array from localStorage
+        const todos = JSON.parse(localStorage.getItem("todos")) || [];
+        // Find the todo with the specified ID
+        const filteredTodos = todos.filter((todo) => String(todo.id) === id);
+        const todo = filteredTodos[0]; // Since filter returns an array, we take the first element
+        if (todo) {
+          reset(todo);
+        } else {
+          console.error("Todo not found with id:", id);
+        }
+      } catch (error) {
+        console.error("Error fetching todo:", error);
+      }
     };
-    onUpdate(updatedTodo); // Pass the updated todo to the parent component
+    fetchTodoById();
+  }, [id, reset, setValue]);
+
+  // handle form submission
+  const onSubmit = (data) => {
+    const handleUpdate = (editedTodo) => {
+      const { id } = editedTodo;
+      // Update the todo item in local storage
+      const todos = JSON.parse(localStorage.getItem("todos")) || [];
+      const updatedIndex = todos.findIndex((todo) => todo.id === id);
+      if (updatedIndex !== -1) {
+        todos[updatedIndex] = editedTodo;
+        localStorage.setItem("todos", JSON.stringify(todos));
+        // Redirect to the TodoList page
+        navigate("/todolist");
+      } else {
+        console.error("Todo not found in local storage:", id);
+      }
+    };
+
+    handleUpdate(data);
   };
 
   return (
     <div>
-      <h2><strong>Edit Todo</strong></h2>
-      <Form>
-        <Form.Group controlId="formName" className='my-4'>
+      <h2>
+        <strong>Edit Todo</strong>
+      </h2>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group controlId="frmname" className="my-4">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="text"
+            name="name"
             placeholder="Enter name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            {...register("name", {
+              required: "Name is required",
+              pattern: {
+                value: /^[A-Za-z\s]+$/, // Regex to allow only letters and spaces
+                message: "Name must contain only letters and spaces",
+              },
+            })}
           />
+          {errors.name && (
+            <span className="text-danger">{errors.name.message}</span>
+          )}
         </Form.Group>
 
-        <Form.Group controlId="formEmail" className='my-4'>
+        <Form.Group controlId="formEmail" className="my-4">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
+            name="email"
             placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email", { required: "Email is required" })}
           />
+          {errors.email && (
+            <span className="text-danger">{errors.email.message}</span>
+          )}
         </Form.Group>
 
-        <Form.Group controlId="formTask" className='my-4'>
-          <Form.Label>Task</Form.Label>
+        <Form.Group controlId="formTodo" className="my-4">
+          <Form.Label>Todo</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter task"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
+            name="todo"
+            placeholder="Enter Todo"
+            {...register("todo", { required: "Todo is required" })}
           />
+          {errors.todo && (
+            <span className="text-danger">{errors.todo.message}</span>
+          )}
         </Form.Group>
 
-        <Button variant="primary my-5" onClick={handleUpdate}>
+        <Button variant="primary my-5" type="submit">
           Update
         </Button>
       </Form>

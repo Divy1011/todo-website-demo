@@ -1,41 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Table, Button } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-const TodoList = ({ onDelete }) => {
-  const [todos, setTodos] = useState([]);
+const TodoList = () => {
+  
+  const [todos, setTodos] = React.useState([]);
 
   useEffect(() => {
-    // Retrieve todos from localStorage
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
     setTodos(storedTodos);
   }, []);
 
   const handleDelete = (id) => {
+    const shouldDelete = window.confirm("Are you sure you want to delete this todo?");
+    if (shouldDelete) {
+      const updatedTodos = todos.filter((todo) => todo.id !== id);
+      setTodos(updatedTodos);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    }
+  };
 
-    onDelete(id);
-    window.location.reload();
+  const deleteAll = () => {
+    const shouldDeleteAll = window.confirm("Are you sure you want to delete all todos?");
+    if (shouldDeleteAll) {
+      setTodos([]);
+      localStorage.removeItem("todos");
+      // Perform any other necessary actions upon deleting all todos
+    }
   };
 
   return (
     <div>
-      <Button className="btnadd my-5" as={NavLink} to="/todoadd" variant="success">
-        Add Todo
-      </Button>
-      <br></br>
+      <br />
       <h2 className="m-2">Todo List</h2>
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th></th>
+            <th></th>
+            <th><Button className="btnadd" as={NavLink} to="/todoadd" variant="success">
+              Add new todo
+            </Button></th>
+            <th></th>
+            <th><Button variant="danger" onClick={deleteAll}>Delete All</Button></th>
+          </tr>
+          <tr>
+            <th>No.</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Task</th>
+            <th>Todo</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo) => (
+          {todos.map((todo, index) => (
             <tr key={todo.id}>
+              <td>{index + 1}</td>
               <td>{todo.name}</td>
               <td>{todo.email}</td>
               <td>{todo.todo}</td>
@@ -43,9 +63,9 @@ const TodoList = ({ onDelete }) => {
                 <Button variant="danger" className="me-2" onClick={() => handleDelete(todo.id)}>
                   Delete
                 </Button>
-                <Button variant="warning" as={NavLink} to="/todoedit">
-                  Edit
-                </Button>
+                <Link to={`/todoedit/${todo.id}`} state={{ todo: todo }}>
+                  <Button variant="warning">Edit</Button>
+                </Link>
               </td>
             </tr>
           ))}
