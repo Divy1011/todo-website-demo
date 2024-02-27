@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import "./todo.css";
+import { toast } from "react-toastify"; 
 import "react-toastify/dist/ReactToastify.css";
-import AddSuccessModal from "../../component/Modal/AddedSucessmodal";
+import "./todo.css";
 import { useNavigate } from "react-router-dom";
+
 const Todo = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     document.title = "Add Todo";
   }, []);
@@ -18,7 +19,6 @@ const Todo = () => {
     formState: { errors },
   } = useForm(); // Capture reset function
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const onSubmit = (data) => {
     // Construct the todo item
     const todoItem = {
@@ -32,13 +32,15 @@ const Todo = () => {
 
     // Clear the input fields
     reset(); // Call reset function to clear form fields
-    setShowSuccessModal(true);
+
+    // Show toast notification for successful todo addition
+    toast.success("Todo added successfully!!");
+
+    setTimeout(() => {
+      navigate("/todolist")
+    }, 800);
   };
-  const handleCloseSuccessModal = () => {
-    setShowSuccessModal(false);
-    // Redirect to the TodoList page
-    history("/todolist");
-  };
+
   return (
     <div className="container">
       <h2>
@@ -91,10 +93,6 @@ const Todo = () => {
           Add Todo
         </Button>
       </Form>
-      <AddSuccessModal
-        show={showSuccessModal}
-        handleClose={handleCloseSuccessModal}
-      />
     </div>
   );
 };

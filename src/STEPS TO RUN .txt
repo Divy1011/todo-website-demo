@@ -1,5 +1,0 @@
-1 Install Node For windows
-2 open terminal placed down in vscode from this folder
-3 write : npm i      and press enter
-4 write npm start 
-5 for folder structure go to App.js file at leftside 

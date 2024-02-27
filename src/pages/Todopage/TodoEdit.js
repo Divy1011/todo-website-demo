@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import EditSuccessModal from "../../component/Modal/Editsucessmodal";
+import { toast } from "react-toastify"; 
+import "react-toastify/dist/ReactToastify.css";
 
 const TodoEdit = () => {
+  const navigate = useNavigate();
   useEffect(() => {
-    document.title = "Edit Todo"
-  }, [])
+    document.title = "Edit Todo";
+  }, []);
   const { id } = useParams(); // Retrieve the id parameter from the URL
-  const navigate = useNavigate(); // Access the history object
+ // Access the history object
   const {
     register,
     handleSubmit,
@@ -37,7 +39,7 @@ const TodoEdit = () => {
     };
     fetchTodoById();
   }, [id, reset, setValue]);
-  const [showEditSuccessModal, setShowEditSuccessModal] = useState(false);
+
 
   // handle form submission
   const onSubmit = (data) => {
@@ -50,20 +52,18 @@ const TodoEdit = () => {
         todos[updatedIndex] = editedTodo;
         localStorage.setItem("todos", JSON.stringify(todos));
         // Redirect to the TodoList page
-        setShowEditSuccessModal(true);
+        toast.success("Todo Updated successfully!!");
+        setTimeout(() => {
+          navigate("/todolist")
+        }, 800);
       } else {
         console.error("Todo not found in local storage:", id);
       }
     };
 
     handleUpdate(data);
-   
   };
-  const handleCloseEditSuccessModal = () => {
-    setShowEditSuccessModal(false);
-    // Redirect to the TodoList page
-    navigate("/todolist");
-  };
+  
 
   return (
     <div>
@@ -120,11 +120,6 @@ const TodoEdit = () => {
           Update
         </Button>
       </Form>
-      <EditSuccessModal
-           show={showEditSuccessModal}
-           handleClose={handleCloseEditSuccessModal}
-      />
-            
     </div>
   );
 };

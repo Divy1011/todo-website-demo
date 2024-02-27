@@ -1,15 +1,19 @@
+// TodoList.js
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import DeleteSuccessModal from "../../component/Modal/deletemodal";
+import DeleteConfirmationModal from "../../component/Modal/deletemodal";
+import "react-toastify/dist/ReactToastify.css";
 
 const TodoList = () => {
   useEffect(() => {
-    document.title = "TodoList"
-  }, [])
-  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
-  const [todos, setTodos] = React.useState([]);
+    document.title = "TodoList";
+  }, []);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [todos, setTodos] = useState([]);
+  const [todoToDelete, setTodoToDelete] = useState(null);
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -17,29 +21,29 @@ const TodoList = () => {
   }, []);
 
   const handleDelete = (id) => {
-    const shouldDelete = window.confirm("Are you sure you want to delete this todo?");
-    if (shouldDelete) {
-      const updatedTodos = todos.filter((todo) => todo.id !== id);
-      setTodos(updatedTodos);
-      localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      setShowDeleteSuccessModal(true); 
-    }
-    toast.success("Todo deleted sucessfully")
+    setTodos(todos.filter((todo) => todo.id !== id));
+    localStorage.setItem(
+      "todos",
+      JSON.stringify(todos.filter((todo) => todo.id !== id))
+    );
+    setShowDeleteModal(false);
+    toast.success("Todo deleted successfully!!");
   };
-  const handleCloseDeleteSuccessModal = () => {
-    setShowDeleteSuccessModal(false);
-    toast.success("Todo deleted successfully"); // Show toast notification
-  }
+
+  const handleCloseModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleShowModal = (todo) => {
+    setShowDeleteModal(true);
+    setTodoToDelete(todo); // Set the todoToDelete state for deletion
+  };
 
   const deleteAll = () => {
-    const shouldDeleteAll = window.confirm("Are you sure you want to delete all todos?");
-    if (shouldDeleteAll) {
-      setTodos([]);
-      localStorage.removeItem("todos");
-      setShowDeleteSuccessModal(true); 
-      // Perform any other necessary actions upon deleting all todos
-    }
-    toast.success("All Todos deleted sucessfully")
+    setTodos([]);
+    localStorage.removeItem("todos");
+    setShowDeleteModal(false);
+    toast.success("All Todos deleted successfully!!");
   };
 
   return (
@@ -52,10 +56,20 @@ const TodoList = () => {
             <th></th>
             <th></th>
             <th></th>
-            <th><Button className="btnadd" as={NavLink} to="/todoadd" variant="success">
-              Add Todo
-            </Button></th>
-            <th><Button variant="danger" onClick={deleteAll}>Delete All</Button></th>
+            <th>
+              <Button
+                className="btnadd"
+                as={NavLink}
+                to="/todoadd"
+                variant="success">
+                Add Todo
+              </Button>
+            </th>
+            <th>
+              <Button variant="danger" onClick={deleteAll}>
+                Delete All
+              </Button>
+            </th>
           </tr>
           <tr>
             <th>No.</th>
@@ -73,7 +87,11 @@ const TodoList = () => {
               <td>{todo.email}</td>
               <td>{todo.todo}</td>
               <td>
-                <Button variant="danger" className="me-2" onClick={() => handleDelete(todo.id)}>
+                <Button
+                  variant="danger"
+                  className="me-2"
+                  onClick={() => handleShowModal(todo)} // Pass the todo object
+                >
                   Delete
                 </Button>
                 <Link to={`/todoedit/${todo.id}`} state={{ todo: todo }}>
@@ -84,9 +102,10 @@ const TodoList = () => {
           ))}
         </tbody>
       </Table>
-      <DeleteSuccessModal
-        show={showDeleteSuccessModal}
-        handleClose={handleCloseDeleteSuccessModal}
+      <DeleteConfirmationModal
+        show={showDeleteModal}
+        handleClose={handleCloseModal}
+        handleConfirm={() => handleDelete(todoToDelete.id)} // Pass the todoToDelete id for deletion
       />
     </div>
   );

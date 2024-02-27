@@ -1,21 +1,24 @@
+// DeleteConfirmationModal.js
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
-// import "./deleteCss.css"
 
-const DeleteSuccessModal = ({ show, handleClose }) => {
+const DeleteConfirmationModal = ({ show, handleClose, handleConfirm }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Success.. &#x1F44D;</Modal.Title>
+        <Modal.Title>Confirm Deletion &#128533;</Modal.Title>
       </Modal.Header>
-      <Modal.Body>The todo has been deleted successfully!!</Modal.Body>
+      <Modal.Body>Are you sure you want to delete this todo?</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Close
+          Cancel  &#10060;
+        </Button>
+        <Button variant="danger" onClick={handleConfirm}>
+          Confirm &#10004;
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default DeleteSuccessModal;
+export default DeleteConfirmationModal;
