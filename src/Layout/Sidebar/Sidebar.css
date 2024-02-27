@@ -1,53 +1,13 @@
-*{
-  box-sizing: border-box;
-}
-
-
-.App {
-  font-family: sans-serif;
-  text-align: center;
-}
-
-
 .sidebar {
+  margin-top: 50px;
   position: fixed;
-  width: 50px;
+  width: 70px;
   height: 100%;
   background-color: #2a363b;
   transition: width 0.3s ease;
-  border-right: 1px #4d606e solid;
+  border-right: 1px solid #4d606e;
   padding-top: 15px;
-}
-
-.sidebar .sidebar-position {
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  padding: 0 12px;
-  text-align: left;
-}
-
-.sidebar .sidebar-position:hover {
-  background-color: #3f5159;
-  border-right: 5px #e84a5f solid;
-}
-
-.sidebar svg {
-  color: #ffffff;
-  min-width: 25px;
-}
-
-.sidebar span {
-  width: 0;
-  height: 0;
-  padding: 0 15px;
-  transition: width 0.3s ease;
-  color: #c9c9c9;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  z-index: 1;
 }
 
 .sidebar--open {
@@ -55,18 +15,80 @@
   transition: width 0.3s ease;
 }
 
-.sidebar--open .sidebar-position span {
-  display: block;
-  width: 100%;
-  height: auto;
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar--open + .main-content {
+  margin-left: 200px;
 }
 
 .trigger {
   height: 50px;
+  width: 50px;
   font-size: 24px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 0 12px 15px;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 10px; /* Adjusted left position */
+}
+
+
+.sidebar-position {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.sidebar--open .sidebar-position {
+  width: calc(100% - 50px); /* Adjusted width */
+}
+
+.sidebar-position > div {
+  margin-right: 10px;
+}
+
+.sidebar-position span {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #c9c9c9;
+  text-transform: uppercase;
+  display: none; /* Initially hide text */
+}
+
+.sidebar--open .sidebar-position span {
+  display: block; /* Show text when sidebar is open */
+  margin-top: 50px;
+  margin-left: 10px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sidebar svg {
+  margin-left: 10px;
+  text-align: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  color: #ffffff;
+  min-width: 35px;
+  height: 20px;
+  cursor: pointer;
+}
+
+#divm{
+  margin-top: 0px;
+  margin-left: 10px;
+  padding-bottom: 10px;
+  cursor: pointer; 
+  height: 20px; 
+  width: 20px;
 }

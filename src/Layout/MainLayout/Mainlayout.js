@@ -12,21 +12,20 @@ const Mainlayout = () => {
     <div className="body">
       <div className="header">
         <div className="bar">
-        <Progressbars />
+          <Progressbars />
         </div>
         <TopBar />
       </div>
       <div className="main">
-        <div className="sidemenu">
-          <SideMenu />
-        </div>
-        <div className="content">
-          <Outlet />
-        </div>
-        </div>
+      <SideMenu />
+      <div className="main-content">
+        <Outlet />
+      </div>
+      
+      </div>
       <div className="footer">
-          <Footer />
-        </div>
+        <Footer />
+      </div>
     </div>
   );
 };

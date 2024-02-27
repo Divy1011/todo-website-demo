@@ -19,8 +19,7 @@ const SideMenu = () => {
   const handleTrigger = () => setIsOpen(!isOpen);
 
   const redirectToHome = () => {
-
-    history("/"); 
+    history("/");
   };
   const redirectToabout = () => {
     history("/about");
@@ -34,36 +33,35 @@ const SideMenu = () => {
   const redirectTotodolist = () => {
     history("/todolist");
   };
+
   return (
-    <div className="App">
-      <div className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
-        <div className="trigger" onClick={handleTrigger}>
-          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
-        </div>
+    <div id="nav" className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
+      <div >
+        <FontAwesomeIcon id="divm" icon={isOpen ? faTimes : faBars} className="trigger" onClick={handleTrigger} />
+      </div>
 
-        <div className="sidebar-position" onClick={redirectToHome}>
-          <div>
-            <FontAwesomeIcon icon={faUser} />
-          </div>
-          <span>Home</span>
+      <div className="sidebar-position" onClick={redirectToHome}>
+        <div>
+          <FontAwesomeIcon icon={faUser} />
         </div>
-        <div className="sidebar-position" onClick={redirectToabout}>
-          <FontAwesomeIcon icon={faCogs} />
-          <span>About</span>
-        </div>
-        <div className="sidebar-position" onClick={redirectTocontact}>
-          <FontAwesomeIcon icon={faPhone} />
-          <span>ContactUs</span>
-        </div>
+        <span>Home</span>
+      </div>
+      <div className="sidebar-position" onClick={redirectToabout}>
+        <FontAwesomeIcon icon={faCogs} />
+        <span>About</span>
+      </div>
+      <div className="sidebar-position" onClick={redirectTocontact}>
+        <FontAwesomeIcon icon={faPhone} />
+        <span>ContactUs</span>
+      </div>
 
-        <div className="sidebar-position" onClick={redirectToservice}>
-          <FontAwesomeIcon icon={faList} />
-          <span>Services</span>
-        </div>
-        <div className="sidebar-position" onClick={redirectTotodolist}>
-          <FontAwesomeIcon icon={faListAlt} />
-          <span>Todo</span>
-        </div>
+      <div className="sidebar-position" onClick={redirectToservice}>
+        <FontAwesomeIcon icon={faList} />
+        <span>Services</span>
+      </div>
+      <div className="sidebar-position" onClick={redirectTotodolist}>
+        <FontAwesomeIcon icon={faListAlt} />
+        <span>Todo</span>
       </div>
     </div>
   );
