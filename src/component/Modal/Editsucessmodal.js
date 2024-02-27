@@ -6,7 +6,7 @@ const EditSuccessModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Success</Modal.Title>
+        <Modal.Title>Edit Success..  &#9997;</Modal.Title>
       </Modal.Header>
       <Modal.Body>The todo has been updated successfully!</Modal.Body>
       <Modal.Footer>
