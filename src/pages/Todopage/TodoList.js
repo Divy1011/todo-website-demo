@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import DeleteConfirmationModal from "../../component/Modal/deletemodal";
 import "react-toastify/dist/ReactToastify.css";
 import "./TodoList.css";
+import { faEraser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TodoList = () => {
   useEffect(() => {
@@ -16,6 +18,7 @@ const TodoList = () => {
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [sortFields, setSortFields] = useState({});
   const [sortOrders, setSortOrders] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -75,12 +78,42 @@ const TodoList = () => {
     return sorted;
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm("");
+  };
+
+  const filteredTodos = todos.filter(
+    (todo) =>
+      todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      todo.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      todo.todo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="div">
       <br />
       <h2 className="m-2">Todo List</h2>
+      <div className="custom-search">
+        <input
+          type="text"
+          className="search"
+          placeholder="Search by name, email, or todo..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <FontAwesomeIcon icon={faEraser} className="eraser" onClick={handleClearSearch} />
+      </div>
+
       <div className="">
-        <Button className="btnadd me-5" as={NavLink} to="/todoadd" variant="success">
+        <Button
+          className="btnadd me-5"
+          as={NavLink}
+          to="/todoadd"
+          variant="success">
           Add Todo
         </Button>
         <Button variant="danger" className="btndltall" onClick={deleteAll}>
@@ -93,19 +126,28 @@ const TodoList = () => {
           <tr>
             <th>No.</th>
             <th onClick={() => handleSort("name")}>
-              Name {sortFields["name"] && <span>{sortOrders["name"] === "asc" ? "▲" : "▼"}</span>}
+              Name{" "}
+              {sortFields["name"] && (
+                <span>{sortOrders["name"] === "asc" ? "▲" : "▼"}</span>
+              )}
             </th>
             <th onClick={() => handleSort("email")}>
-              Email {sortFields["email"] && <span>{sortOrders["email"] === "asc" ? "▲" : "▼"}</span>}
+              Email{" "}
+              {sortFields["email"] && (
+                <span>{sortOrders["email"] === "asc" ? "▲" : "▼"}</span>
+              )}
             </th>
             <th onClick={() => handleSort("todo")}>
-              Todo {sortFields["todo"] && <span>{sortOrders["todo"] === "asc" ? "▲" : "▼"}</span>}
+              Todo{" "}
+              {sortFields["todo"] && (
+                <span>{sortOrders["todo"] === "asc" ? "▲" : "▼"}</span>
+              )}
             </th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {sortedTodos().map((todo, index) => (
+          {filteredTodos.map((todo, index) => (
             <tr key={todo.id}>
               <td>{index + 1}</td>
               <td>{todo.name}</td>
