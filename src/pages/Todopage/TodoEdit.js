@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import EditSuccessModal from "../../component/Modal/Editsucessmodal";
 
 const TodoEdit = () => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const TodoEdit = () => {
     };
     fetchTodoById();
   }, [id, reset, setValue]);
+  const [showEditSuccessModal, setShowEditSuccessModal] = useState(false);
 
   // handle form submission
   const onSubmit = (data) => {
@@ -48,13 +50,19 @@ const TodoEdit = () => {
         todos[updatedIndex] = editedTodo;
         localStorage.setItem("todos", JSON.stringify(todos));
         // Redirect to the TodoList page
-        navigate("/todolist");
+        setShowEditSuccessModal(true);
       } else {
         console.error("Todo not found in local storage:", id);
       }
     };
 
     handleUpdate(data);
+   
+  };
+  const handleCloseEditSuccessModal = () => {
+    setShowEditSuccessModal(false);
+    // Redirect to the TodoList page
+    navigate("/todolist");
   };
 
   return (
@@ -112,6 +120,11 @@ const TodoEdit = () => {
           Update
         </Button>
       </Form>
+      <EditSuccessModal
+           show={showEditSuccessModal}
+           handleClose={handleCloseEditSuccessModal}
+      />
+            
     </div>
   );
 };

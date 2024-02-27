@@ -1,13 +1,14 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import "./CommonModalCss.css"
 
-const DeleteSuccessModal = ({ show, handleClose }) => {
+const EditSuccessModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Success</Modal.Title>
+        <Modal.Title>Edit Success</Modal.Title>
       </Modal.Header>
-      <Modal.Body>The todo has been deleted successfully!!</Modal.Body>
+      <Modal.Body>The todo has been updated successfully!</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close
@@ -17,4 +18,4 @@ const DeleteSuccessModal = ({ show, handleClose }) => {
   );
 };
 
-export default DeleteSuccessModal;
+export default EditSuccessModal;

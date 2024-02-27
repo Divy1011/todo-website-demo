@@ -1,7 +1,16 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import "./CommonModalCss.css"
 
-const TodoAddedModal = ({ show, handleClose }) => {
+const AddSuccessModal = ({ show, handleClose }) => {
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate("/todolist");
+    handleClose();
+  };
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -9,7 +18,7 @@ const TodoAddedModal = ({ show, handleClose }) => {
       </Modal.Header>
       <Modal.Body>Your todo has been added successfully!</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={handleRedirect}>
           Close
         </Button>
       </Modal.Footer>
@@ -17,4 +26,4 @@ const TodoAddedModal = ({ show, handleClose }) => {
   );
 };
 
-export default TodoAddedModal;
+export default AddSuccessModal;

@@ -2,55 +2,48 @@ import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import "./todo.css";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import AddSuccessModal from "../../component/Modal/AddedSucessmodal";
 import { useNavigate } from "react-router-dom";
-
 const Todo = () => {
   const history = useNavigate();
   useEffect(() => {
-    document.title = "Add Todo"
-  }, [])
- 
+    document.title = "Add Todo";
+  }, []);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm(); // Capture reset function
-  const [, setMsg] = useState(null); // State for toast message
 
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const onSubmit = (data) => {
-   
-    
     // Construct the todo item
     const todoItem = {
       ...data,
       id: Date.now(),
     };
-   
+
     // Save the todo item to localStorage
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
     localStorage.setItem("todos", JSON.stringify([...storedTodos, todoItem]));
 
     // Clear the input fields
     reset(); // Call reset function to clear form fields
-
-    // Show toast notification
-    setMsg("Todo Added Successfully");
-    toast.success("Todo Added Successfully Redirecting... TodoList ");
-
-    // Navigate to the desired page
-    setTimeout(() => {
-      history("/todolist"); // Redirect to TodoList page
-    }, 3000); 
-  }
+    setShowSuccessModal(true);
+  };
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+    // Redirect to the TodoList page
+    history("/todolist");
+  };
   return (
     <div className="container">
       <h2>
         <strong>Add Todo</strong>
       </h2>
-      <ToastContainer position="top-center"/>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="formName" className="my-4">
           <Form.Label>Name</Form.Label>
@@ -98,6 +91,10 @@ const Todo = () => {
           Add Todo
         </Button>
       </Form>
+      <AddSuccessModal
+        show={showSuccessModal}
+        handleClose={handleCloseSuccessModal}
+      />
     </div>
   );
 };

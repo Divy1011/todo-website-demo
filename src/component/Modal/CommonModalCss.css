@@ -1,0 +1,21 @@
+/* CommonModalCss.css */
+.modal-header {
+    background-color: #002f62;
+    color: #06fc1f;
+  }
+  
+  .modal-body {
+    background-color: #000000;
+    color: #06fc1f;
+  }
+  
+  .modal-footer {
+    background-color: #002f62;
+    color: #fff;
+  }
+  
+  .btn-secondary {
+    background-color: #5aff28;
+    color: #000000;
+  }
+  

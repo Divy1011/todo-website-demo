@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import DeleteSuccessModal from "../../component/Modal/deletemodal"; // Import the delete success modal component
+import DeleteSuccessModal from "../../component/Modal/deletemodal";
 
 const TodoList = () => {
   useEffect(() => {
     document.title = "TodoList"
   }, [])
-  
+  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false);
   const [todos, setTodos] = React.useState([]);
-  const [showDeleteSuccessModal, setShowDeleteSuccessModal] = useState(false); // State for showing/hiding modal
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -23,24 +22,24 @@ const TodoList = () => {
       const updatedTodos = todos.filter((todo) => todo.id !== id);
       setTodos(updatedTodos);
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
-      setShowDeleteSuccessModal(true); // Show delete success modal
+      setShowDeleteSuccessModal(true); 
     }
+    toast.success("Todo deleted sucessfully")
   };
-
   const handleCloseDeleteSuccessModal = () => {
     setShowDeleteSuccessModal(false);
     toast.success("Todo deleted successfully"); // Show toast notification
-  };
+  }
 
   const deleteAll = () => {
     const shouldDeleteAll = window.confirm("Are you sure you want to delete all todos?");
     if (shouldDeleteAll) {
       setTodos([]);
       localStorage.removeItem("todos");
-      toast.success("Todos deleted successfully");
-      
+      setShowDeleteSuccessModal(true); 
       // Perform any other necessary actions upon deleting all todos
     }
+    toast.success("All Todos deleted sucessfully")
   };
 
   return (
@@ -48,11 +47,27 @@ const TodoList = () => {
       <br />
       <h2 className="m-2">Todo List</h2>
       <Table striped bordered hover>
-        {/* Table Headers */}
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th><Button className="btnadd" as={NavLink} to="/todoadd" variant="success">
+              Add new todo
+            </Button></th>
+            <th></th>
+            <th><Button variant="danger" onClick={deleteAll}>Delete All</Button></th>
+          </tr>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Todo</th>
+            <th>Action</th>
+          </tr>
+        </thead>
         <tbody>
           {todos.map((todo, index) => (
             <tr key={todo.id}>
-              {/* Table Cells */}
               <td>{index + 1}</td>
               <td>{todo.name}</td>
               <td>{todo.email}</td>
@@ -69,7 +84,6 @@ const TodoList = () => {
           ))}
         </tbody>
       </Table>
-      {/* Delete Success Modal */}
       <DeleteSuccessModal
         show={showDeleteSuccessModal}
         handleClose={handleCloseDeleteSuccessModal}
