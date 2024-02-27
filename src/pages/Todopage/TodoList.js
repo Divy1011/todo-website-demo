@@ -1,10 +1,10 @@
-// TodoList.js
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import DeleteConfirmationModal from "../../component/Modal/deletemodal";
 import "react-toastify/dist/ReactToastify.css";
+import "./TodoList.css";
 
 const TodoList = () => {
   useEffect(() => {
@@ -14,6 +14,8 @@ const TodoList = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [todos, setTodos] = useState([]);
   const [todoToDelete, setTodoToDelete] = useState(null);
+  const [sortFields, setSortFields] = useState({});
+  const [sortOrders, setSortOrders] = useState({});
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -46,41 +48,64 @@ const TodoList = () => {
     toast.success("All Todos deleted successfully!!");
   };
 
+  const handleSort = (field) => {
+    const newSortOrders = { ...sortOrders };
+    if (sortFields[field]) {
+      newSortOrders[field] = sortOrders[field] === "asc" ? "desc" : "asc";
+    } else {
+      newSortOrders[field] = "asc";
+    }
+    setSortOrders(newSortOrders);
+    setSortFields({ [field]: true });
+  };
+
+  const sortedTodos = () => {
+    let sorted = [...todos];
+    Object.keys(sortFields).forEach((field) => {
+      sorted = sorted.sort((a, b) => {
+        if (a[field] < b[field]) {
+          return sortOrders[field] === "asc" ? -1 : 1;
+        }
+        if (a[field] > b[field]) {
+          return sortOrders[field] === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    });
+    return sorted;
+  };
+
   return (
     <div className="div">
       <br />
       <h2 className="m-2">Todo List</h2>
-      <Table striped bordered hover>
+      <div className="">
+        <Button className="btnadd me-5" as={NavLink} to="/todoadd" variant="success">
+          Add Todo
+        </Button>
+        <Button variant="danger" className="btndltall" onClick={deleteAll}>
+          Delete All
+        </Button>
+      </div>
+      <br />
+      <Table className="sortable" striped bordered hover>
         <thead>
           <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>
-              <Button
-                className="btnadd"
-                as={NavLink}
-                to="/todoadd"
-                variant="success">
-                Add Todo
-              </Button>
-            </th>
-            <th>
-              <Button variant="danger" onClick={deleteAll}>
-                Delete All
-              </Button>
-            </th>
-          </tr>
-          <tr>
             <th>No.</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Todo</th>
+            <th onClick={() => handleSort("name")}>
+              Name {sortFields["name"] && <span>{sortOrders["name"] === "asc" ? "▲" : "▼"}</span>}
+            </th>
+            <th onClick={() => handleSort("email")}>
+              Email {sortFields["email"] && <span>{sortOrders["email"] === "asc" ? "▲" : "▼"}</span>}
+            </th>
+            <th onClick={() => handleSort("todo")}>
+              Todo {sortFields["todo"] && <span>{sortOrders["todo"] === "asc" ? "▲" : "▼"}</span>}
+            </th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {todos.map((todo, index) => (
+          {sortedTodos().map((todo, index) => (
             <tr key={todo.id}>
               <td>{index + 1}</td>
               <td>{todo.name}</td>
