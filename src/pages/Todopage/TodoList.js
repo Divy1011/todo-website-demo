@@ -51,10 +51,10 @@ const TodoList = () => {
           <tr>
             <th></th>
             <th></th>
-            <th><Button className="btnadd" as={NavLink} to="/todoadd" variant="success">
-              Add new todo
-            </Button></th>
             <th></th>
+            <th><Button className="btnadd" as={NavLink} to="/todoadd" variant="success">
+              Add Todo
+            </Button></th>
             <th><Button variant="danger" onClick={deleteAll}>Delete All</Button></th>
           </tr>
           <tr>
