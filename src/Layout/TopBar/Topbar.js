@@ -10,7 +10,7 @@ import "./Topbar.css"
 const TopBar = () => {
   return (
     <>
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar bg="dark" data-bs-theme="dark" className="nav">
         <Container>
           <Navbar.Brand href="/home">Navbar</Navbar.Brand>
           <Nav className="justify-content-end">

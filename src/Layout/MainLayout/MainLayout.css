@@ -26,10 +26,12 @@
   width: 13%;
   margin-right: 10px;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
 }
 
+
 .content {
+  cursor: text;
   flex: 1;
   align-items: center;
   text-align: center;
@@ -69,5 +71,23 @@
   }
   .content{
     display: none !important ;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .footer{
+    display: none !important;
+  }
+  .content{
+    text-align: center;
+    margin-left: 20px;
+  }
+ 
+
+}
+
+@media screen and (max-width: 1800px) {
+  .content{
+    font-size: large; 
   }
 }

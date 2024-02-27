@@ -12,3 +12,9 @@
     font-size: 30px;
     float: right;
   }
+
+  @media only-screen and (max-width: 320) {
+    .footer-dark{
+      display: none;
+    }
+}

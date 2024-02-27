@@ -4,8 +4,10 @@ import { useForm } from "react-hook-form";
 import "./todo.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const Todo = () => {
+  const history = useNavigate();
   useEffect(() => {
     document.title = "Add Todo"
   }, [])
@@ -19,6 +21,8 @@ const Todo = () => {
   const [, setMsg] = useState(null); // State for toast message
 
   const onSubmit = (data) => {
+   
+    
     // Construct the todo item
     const todoItem = {
       ...data,
@@ -34,9 +38,12 @@ const Todo = () => {
 
     // Show toast notification
     setMsg("Todo Added Successfully");
-    toast.success("Todo Added Successfully");
+    toast.success("Todo Added Successfully Redirecting... TodoList ");
 
     // Navigate to the desired page
+    setTimeout(() => {
+      history("/todolist"); // Redirect to TodoList page
+    }, 3000); 
   }
   return (
     <div className="container">
