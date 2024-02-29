@@ -22,7 +22,7 @@ const TodoList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [todosPerPage] = useState(6);
+  const [todosPerPage] = useState(8);
 
   // Load todos from localStorage on component mount
   useEffect(() => {

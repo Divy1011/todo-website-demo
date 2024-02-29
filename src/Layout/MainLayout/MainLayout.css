@@ -1,5 +1,5 @@
 .body {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   padding: 0%;
   margin: 0%;
@@ -26,14 +26,16 @@
 }
 
 .footer {
-  height: 40px; /* Assuming footer height is 60px */
+  display: none;
+  height: 30px; /* Assuming footer height is 60px */
   bottom: 0; /* Changed to 0 */
 }
 .main{
   margin-top: 5px;
 }
 .main-content {
-  margin-top: 50px;
+  overflow: auto;
+  margin-top: 20px;
   text-align: center;
   margin-left: 70px;
   transition: margin-left 0.3s ease;
