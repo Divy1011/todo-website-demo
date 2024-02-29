@@ -3,6 +3,7 @@ import { Table, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import DeleteConfirmationModal from "../../component/Modal/deletemodal";
+import Pagination from "../../component/Pagination/PagiNation"; // Import Pagination component
 import "react-toastify/dist/ReactToastify.css";
 import "./TodoList.css";
 import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +19,8 @@ const TodoList = () => {
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [todosPerPage] = useState(6);
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -63,7 +66,7 @@ const TodoList = () => {
     newSortOrder[field] = newSortOrder[field] === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
   };
-  
+
   const filteredTodos = todos.filter(
     (todo) =>
       todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -87,6 +90,17 @@ const TodoList = () => {
     });
     return sorted;
   };
+
+  // Logic to get current todos
+  const indexOfLastTodo = currentPage * todosPerPage;
+  const indexOfFirstTodo = indexOfLastTodo - todosPerPage + 1; // Adjusted index calculation
+  const currentTodos = sortedFilteredTodos().slice(
+    indexOfFirstTodo - 1, // Adjusted index for array slice
+    indexOfLastTodo
+  );
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="div">
@@ -149,9 +163,9 @@ const TodoList = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedFilteredTodos().map((todo, index) => (
+          {currentTodos.map((todo, index) => (
             <tr key={todo.id}>
-              <td>{index + 1}</td>
+              <td>{indexOfFirstTodo + index}</td> {/* Display adjusted index */}
               <td>{todo.name}</td>
               <td>{todo.email}</td>
               <td>{todo.todo}</td>
@@ -171,6 +185,14 @@ const TodoList = () => {
           ))}
         </tbody>
       </Table>
+      <div className="Pagen">
+      <Pagination
+      className="Pagination"
+        currentPage={currentPage}
+        totalPages={Math.ceil(filteredTodos.length / todosPerPage)}
+        paginate={paginate}
+      />
+      </div>
       <DeleteConfirmationModal
         show={showDeleteModal}
         handleClose={handleCloseModal}
