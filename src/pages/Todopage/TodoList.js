@@ -17,6 +17,7 @@ const TodoList = () => {
   const [todos, setTodos] = useState([]);
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOrder, setSortOrder] = useState({});
 
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
@@ -57,6 +58,12 @@ const TodoList = () => {
     setSearchTerm("");
   };
 
+  const handleSort = (field) => {
+    const newSortOrder = { ...sortOrder };
+    newSortOrder[field] = newSortOrder[field] === "asc" ? "desc" : "asc";
+    setSortOrder(newSortOrder);
+  };
+  
   const filteredTodos = todos.filter(
     (todo) =>
       todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -64,12 +71,29 @@ const TodoList = () => {
       todo.todo.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Define a function to sort the filtered todos
+  const sortedFilteredTodos = () => {
+    let sorted = [...filteredTodos];
+    Object.keys(sortOrder).forEach((field) => {
+      sorted = sorted.sort((a, b) => {
+        if (a[field] < b[field]) {
+          return sortOrder[field] === "asc" ? -1 : 1;
+        }
+        if (a[field] > b[field]) {
+          return sortOrder[field] === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+    });
+    return sorted;
+  };
+
   return (
     <div className="div">
       <br />
       <h2 className="m-2">Todo List</h2>
       <div className="custom-search">
-      <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
+        <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
         <input
           type="text"
           className="search"
@@ -78,7 +102,11 @@ const TodoList = () => {
           onChange={handleSearchChange}
         />
         {searchTerm && (
-          <FontAwesomeIcon icon={faEraser} className="eraser" onClick={handleClearSearch} />
+          <FontAwesomeIcon
+            icon={faEraser}
+            className="eraser"
+            onClick={handleClearSearch}
+          />
         )}
       </div>
 
@@ -96,17 +124,32 @@ const TodoList = () => {
       </div>
       <br />
       <Table striped bordered hover>
-        <thead>
+        <thead className="Heade">
           <tr>
             <th>No.</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Todo</th>
+            <th onClick={() => handleSort("name")}>
+              Name{" "}
+              {sortOrder["name"] && (
+                <span>{sortOrder["name"] === "asc" ? "▲" : "▼"}</span>
+              )}
+            </th>
+            <th onClick={() => handleSort("email")}>
+              Email{" "}
+              {sortOrder["email"] && (
+                <span>{sortOrder["email"] === "asc" ? "▲" : "▼"}</span>
+              )}
+            </th>
+            <th onClick={() => handleSort("todo")}>
+              Todo{" "}
+              {sortOrder["todo"] && (
+                <span>{sortOrder["todo"] === "asc" ? "▲" : "▼"}</span>
+              )}
+            </th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {filteredTodos.map((todo, index) => (
+          {sortedFilteredTodos().map((todo, index) => (
             <tr key={todo.id}>
               <td>{index + 1}</td>
               <td>{todo.name}</td>
