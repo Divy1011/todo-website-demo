@@ -3,17 +3,19 @@ import { Table, Button } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import DeleteConfirmationModal from "../../component/Modal/deletemodal";
-import Pagination from "../../component/Pagination/PagiNation"; // Import Pagination component
+import Pagination from "../../component/Pagination/PagiNation";
 import "react-toastify/dist/ReactToastify.css";
 import "./TodoList.css";
 import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TodoList = () => {
+  // Set document title on component mount
   useEffect(() => {
     document.title = "TodoList";
   }, []);
 
+  // State initialization
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [todos, setTodos] = useState([]);
   const [todoToDelete, setTodoToDelete] = useState(null);
@@ -22,11 +24,33 @@ const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(6);
 
+  // Load todos from localStorage on component mount
   useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
-    setTodos(storedTodos);
+    const storedTodos = JSON.parse(localStorage.getItem("todos"));
+    if (storedTodos) {
+      setTodos(storedTodos);
+    } else {
+      const dummyData = generateDummyData();
+      setTodos(dummyData);
+      localStorage.setItem("todos", JSON.stringify(dummyData));
+    }
   }, []);
 
+  // Generate dummy data
+  const generateDummyData = () => {
+    const dummyData = [];
+    for (let i = 1; i <= 100; i++) {
+      dummyData.push({
+        id: i,
+        name: `User ${i}`,
+        email: `user${i}@example.com`,
+        todo: `Task ${i}`,
+      });
+    }
+    return dummyData;
+  };
+
+  // Function to handle todo deletion
   const handleDelete = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
     localStorage.setItem(
@@ -37,15 +61,18 @@ const TodoList = () => {
     toast.success("Todo deleted successfully!!");
   };
 
+  // Function to close delete confirmation modal
   const handleCloseModal = () => {
     setShowDeleteModal(false);
   };
 
+  // Function to show delete confirmation modal
   const handleShowModal = (todo) => {
     setShowDeleteModal(true);
     setTodoToDelete(todo); // Set the todoToDelete state for deletion
   };
 
+  // Function to delete all todos
   const deleteAll = () => {
     setTodos([]);
     localStorage.removeItem("todos");
@@ -53,20 +80,24 @@ const TodoList = () => {
     toast.success("All Todos deleted successfully!!");
   };
 
+  // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  // Function to clear search term
   const handleClearSearch = () => {
     setSearchTerm("");
   };
 
+  //This function is responsible for handling the sorting of todos based on a specified field ( name, email, todo).
   const handleSort = (field) => {
     const newSortOrder = { ...sortOrder };
     newSortOrder[field] = newSortOrder[field] === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
   };
 
+  //It uses the filter method on the todos array to check if any of the todo's name, email, or todo text includes the search term (case-insensitive).
   const filteredTodos = todos.filter(
     (todo) =>
       todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -74,7 +105,7 @@ const TodoList = () => {
       todo.todo.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Define a function to sort the filtered todos
+  // Function to sort filtered todos foreach apply to all todos sort func sort the todo in asc or dsc way
   const sortedFilteredTodos = () => {
     let sorted = [...filteredTodos];
     Object.keys(sortOrder).forEach((field) => {
@@ -91,7 +122,7 @@ const TodoList = () => {
     return sorted;
   };
 
-  // Logic to get current todos
+  // Logic to get current todos based on pagination
   const indexOfLastTodo = currentPage * todosPerPage;
   const indexOfFirstTodo = indexOfLastTodo - todosPerPage + 1; // Adjusted index calculation
   const currentTodos = sortedFilteredTodos().slice(
@@ -99,7 +130,7 @@ const TodoList = () => {
     indexOfLastTodo
   );
 
-  // Change page
+  // Function to handle pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -127,7 +158,8 @@ const TodoList = () => {
           className="btnadd me-5"
           as={NavLink}
           to="/todoadd"
-          variant="success">
+          variant="success"
+        >
           Add Todo
         </Button>
         <Button variant="danger" className="btndltall" onClick={deleteAll}>
@@ -163,7 +195,8 @@ const TodoList = () => {
         <tbody>
           {currentTodos.map((todo, index) => (
             <tr key={todo.id}>
-              <td>{indexOfFirstTodo + index}</td> {/* Display adjusted index */}
+              <td>{indexOfFirstTodo + index}</td>{" "}
+              {/* Display adjusted index */}
               <td>{todo.name}</td>
               <td>{todo.email}</td>
               <td>{todo.todo}</td>
