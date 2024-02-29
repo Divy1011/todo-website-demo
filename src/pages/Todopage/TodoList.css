@@ -28,10 +28,23 @@
     width: 300px;
     border-radius: 5px;
     height: 30px;
-        
+
 }
 .eraser{
     height: 30px;
     width: 30px;
     cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+    .custom-search {
+      align-items: center;
+      text-align: center;
+    }
+  }
+  
+
+  .searchbtn{
+    height: 20px;
+    margin-right: 10px;
+  }

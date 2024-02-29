@@ -40,18 +40,6 @@
   transition: margin-left 0.3s ease;
 }
 
-@media screen and (max-width: 768px) {
-  .sidebar {
-    width: 10%; /* Adjust as needed */
-  }
-}
-
-@media screen and (max-width: 622px) {
-  .sidebar {
-    width: 5%; /* Adjust as needed */
-  }
-}
-
 @media screen and (max-width: 320px) {
   .footer {
     display: none !important;

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import DeleteConfirmationModal from "../../component/Modal/deletemodal";
 import "react-toastify/dist/ReactToastify.css";
 import "./TodoList.css";
-import { faEraser } from "@fortawesome/free-solid-svg-icons";
+import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TodoList = () => {
@@ -16,8 +16,6 @@ const TodoList = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [todos, setTodos] = useState([]);
   const [todoToDelete, setTodoToDelete] = useState(null);
-  const [sortFields, setSortFields] = useState({});
-  const [sortOrders, setSortOrders] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -51,33 +49,6 @@ const TodoList = () => {
     toast.success("All Todos deleted successfully!!");
   };
 
-  const handleSort = (field) => {
-    const newSortOrders = { ...sortOrders };
-    if (sortFields[field]) {
-      newSortOrders[field] = sortOrders[field] === "asc" ? "desc" : "asc";
-    } else {
-      newSortOrders[field] = "asc";
-    }
-    setSortOrders(newSortOrders);
-    setSortFields({ [field]: true });
-  };
-
-  const sortedTodos = () => {
-    let sorted = [...todos];
-    Object.keys(sortFields).forEach((field) => {
-      sorted = sorted.sort((a, b) => {
-        if (a[field] < b[field]) {
-          return sortOrders[field] === "asc" ? -1 : 1;
-        }
-        if (a[field] > b[field]) {
-          return sortOrders[field] === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    });
-    return sorted;
-  };
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -98,6 +69,7 @@ const TodoList = () => {
       <br />
       <h2 className="m-2">Todo List</h2>
       <div className="custom-search">
+      <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
         <input
           type="text"
           className="search"
@@ -105,7 +77,9 @@ const TodoList = () => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <FontAwesomeIcon icon={faEraser} className="eraser" onClick={handleClearSearch} />
+        {searchTerm && (
+          <FontAwesomeIcon icon={faEraser} className="eraser" onClick={handleClearSearch} />
+        )}
       </div>
 
       <div className="">
@@ -121,28 +95,13 @@ const TodoList = () => {
         </Button>
       </div>
       <br />
-      <Table className="sortable" striped bordered hover>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>No.</th>
-            <th onClick={() => handleSort("name")}>
-              Name{" "}
-              {sortFields["name"] && (
-                <span>{sortOrders["name"] === "asc" ? "▲" : "▼"}</span>
-              )}
-            </th>
-            <th onClick={() => handleSort("email")}>
-              Email{" "}
-              {sortFields["email"] && (
-                <span>{sortOrders["email"] === "asc" ? "▲" : "▼"}</span>
-              )}
-            </th>
-            <th onClick={() => handleSort("todo")}>
-              Todo{" "}
-              {sortFields["todo"] && (
-                <span>{sortOrders["todo"] === "asc" ? "▲" : "▼"}</span>
-              )}
-            </th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Todo</th>
             <th>Action</th>
           </tr>
         </thead>
