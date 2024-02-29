@@ -117,7 +117,7 @@ const TodoList = () => {
         />
         {searchTerm && (
           <span className="eraser" onClick={handleClearSearch}>
-            <FontAwesomeIcon icon={faEraser} />
+            <FontAwesomeIcon icon={faEraser} className="icon" />
           </span>
         )}
       </div>
