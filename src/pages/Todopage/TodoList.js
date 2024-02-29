@@ -83,6 +83,7 @@ const TodoList = () => {
   // Function to handle search input change
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1); 
   };
 
   // Function to clear search term
@@ -92,22 +93,30 @@ const TodoList = () => {
 
   //This function is responsible for handling the sorting of todos based on a specified field ( name, email, todo).
   const handleSort = (field) => {
+    // If the field is already being sorted, toggle the sort order; otherwise, set it to ascending
     const newSortOrder = { ...sortOrder };
-    newSortOrder[field] = newSortOrder[field] === "asc" ? "desc" : "asc";
+    newSortOrder[field] = sortOrder[field] === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
   };
 
-  //It uses the filter method on the todos array to check if any of the todo's name, email, or todo text includes the search term (case-insensitive).
-  const filteredTodos = todos.filter(
-    (todo) =>
-      todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      todo.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      todo.todo.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Function to get filtered todos based on search term
+  const getFilteredTodos = () => {
+    return sortedFilteredTodos().filter(
+      (todo) =>
+        todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        todo.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        todo.todo.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  };
 
-  // Function to sort filtered todos foreach apply to all todos sort func sort the todo in asc or dsc way
+  // Function to handle pagination
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Apply sorting for each field based on sortOrder
   const sortedFilteredTodos = () => {
-    let sorted = [...filteredTodos];
+    let sorted = [...todos];
     Object.keys(sortOrder).forEach((field) => {
       sorted = sorted.sort((a, b) => {
         if (a[field] < b[field]) {
@@ -122,16 +131,14 @@ const TodoList = () => {
     return sorted;
   };
 
-  // Logic to get current todos based on pagination
+  // Get current todos based on pagination and search term
+  const filteredTodos = getFilteredTodos();
   const indexOfLastTodo = currentPage * todosPerPage;
-  const indexOfFirstTodo = indexOfLastTodo - todosPerPage + 1; // Adjusted index calculation
-  const currentTodos = sortedFilteredTodos().slice(
-    indexOfFirstTodo - 1, // Adjusted index for array slice
+  const indexOfFirstTodo = indexOfLastTodo - todosPerPage; // Adjusted index calculation
+  const currentTodos = filteredTodos.slice(
+    indexOfFirstTodo,
     indexOfLastTodo
   );
-
-  // Function to handle pagination
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="div">
@@ -172,19 +179,19 @@ const TodoList = () => {
           <tr>
             <th>No.</th>
             <th onClick={() => handleSort("name")}>
-              Name{" "}
+              Name
               {sortOrder["name"] && (
                 <span>{sortOrder["name"] === "asc" ? "▲" : "▼"}</span>
               )}
             </th>
             <th onClick={() => handleSort("email")}>
-              Email{" "}
+              Email
               {sortOrder["email"] && (
                 <span>{sortOrder["email"] === "asc" ? "▲" : "▼"}</span>
               )}
             </th>
             <th onClick={() => handleSort("todo")}>
-              Todo{" "}
+              Todo
               {sortOrder["todo"] && (
                 <span>{sortOrder["todo"] === "asc" ? "▲" : "▼"}</span>
               )}
@@ -195,8 +202,7 @@ const TodoList = () => {
         <tbody>
           {currentTodos.map((todo, index) => (
             <tr key={todo.id}>
-              <td>{indexOfFirstTodo + index}</td>{" "}
-              {/* Display adjusted index */}
+              <td>{indexOfFirstTodo + index + 1}</td> {/* Display adjusted index */}
               <td>{todo.name}</td>
               <td>{todo.email}</td>
               <td>{todo.todo}</td>
