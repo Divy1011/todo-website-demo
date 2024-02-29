@@ -9,7 +9,7 @@
         flex-wrap: wrap;
     }
     .Button{
-        height: 3px;
+        max-height: 3px;
         width: 10px;
         font-size: x-small;
     }
@@ -44,11 +44,19 @@
   }
   
 
-  .searchbtn{
+  .custom-search{
+    display: flex;
+    justify-content: right;
     height: 20px;
     margin-right: 10px;
+    margin-bottom: 20px;
   }
 
+  .searchbtn{
+    margin-top: 5px;
+    margin-right: 10px;
+    height: 20px;
+  }
   .Heade{
     cursor: pointer;
   }
@@ -56,4 +64,5 @@
   .Pagen{
     display: flex;
     justify-content: center;
+    padding-bottom: 30px;
   }
