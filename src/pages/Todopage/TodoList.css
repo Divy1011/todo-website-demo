@@ -63,12 +63,12 @@
 
   .Pagen{
     display: flex;
-    justify-content: center;
+    justify-content: left;
     padding-bottom: 30px;
       position: fixed;
       bottom: 70  px;
       width: 100%;
-      z-index: -1; /* Ensure pagination stays above other content */
+      z-index: 1; /* Ensure pagination stays above other content */
   }
   .search {
     padding-right: 30px;
