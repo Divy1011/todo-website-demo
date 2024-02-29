@@ -116,11 +116,9 @@ const TodoList = () => {
           onChange={handleSearchChange}
         />
         {searchTerm && (
-          <FontAwesomeIcon
-            icon={faEraser}
-            className="eraser"
-            onClick={handleClearSearch}
-          />
+          <span className="eraser" onClick={handleClearSearch}>
+            <FontAwesomeIcon icon={faEraser} />
+          </span>
         )}
       </div>
 
@@ -186,12 +184,12 @@ const TodoList = () => {
         </tbody>
       </Table>
       <div className="Pagen">
-      <Pagination
-      className="Pagination"
-        currentPage={currentPage}
-        totalPages={Math.ceil(filteredTodos.length / todosPerPage)}
-        paginate={paginate}
-      />
+        <Pagination
+          className="Pagination"
+          currentPage={currentPage}
+          totalPages={Math.ceil(filteredTodos.length / todosPerPage)}
+          paginate={paginate}
+        />
       </div>
       <DeleteConfirmationModal
         show={showDeleteModal}

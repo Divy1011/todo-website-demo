@@ -66,3 +66,16 @@
     justify-content: center;
     padding-bottom: 30px;
   }
+  .search {
+    padding-right: 30px;
+     /* Adjust the padding to make space for the eraser icon */
+  }
+  
+  .eraser {
+    position: absolute;
+    top: 150px;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
