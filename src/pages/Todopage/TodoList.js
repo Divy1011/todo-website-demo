@@ -102,14 +102,12 @@ const TodoList = () => {
   
   const sortedFilteredTodos = () => {
     let sorted = [...todos];
+    
     // Sort based on the primary field
     const primaryField = Object.keys(sortOrder)[0];
     sorted = sorted.sort((a, b) => {
-      if (a[primaryField] < b[primaryField]) {
+      if (a[primaryField] !== b[primaryField]) {
         return sortOrder[primaryField] === "asc" ? -1 : 1;
-      }
-      if (a[primaryField] > b[primaryField]) {
-        return sortOrder[primaryField] === "asc" ? 1 : -1;
       }
       return 0;
     });
