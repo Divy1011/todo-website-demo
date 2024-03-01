@@ -12,7 +12,8 @@
         max-height: 3px;
         width: 10px;
         font-size: x-small;
-    }
+    };
+  
 }
 
 .btnadd{
@@ -41,7 +42,16 @@
       align-content: center;
     }
   }
-
+  @media screen and (max-width: 535px) {
+    .div{
+      height: auto;
+      margin-bottom: 30px;
+    }
+    .Pagen{
+      margin-top: 50px;
+      display: block;
+    }
+  }
   .custom-search{
     display: flex;
     justify-content: right;
@@ -63,10 +73,9 @@
     display: flex;
     justify-content: left;
     padding-bottom: 30px;
-      position: fixed;
       bottom: 70  px;
       width: 100%;
-      z-index: 1; /* Ensure pagination stays above other content */
+      z-index: 99; /* Ensure pagination stays above other content */
   }
   .search {
     padding-right: 30px;

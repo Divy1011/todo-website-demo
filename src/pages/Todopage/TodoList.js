@@ -22,7 +22,7 @@ const TodoList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [todosPerPage] = useState(8);
+  const [todosPerPage] = useState(6);
 
   // Load todos from localStorage on component mount
   useEffect(() => {
@@ -49,7 +49,7 @@ const TodoList = () => {
       dummyData.push({
         id: i,
         name: `User ${i}`,
-        email: `user${i}@example.com`,
+        email: `name${i}@gmail.com`,
         todo: `Task ${i}`,
       });
     }
@@ -185,7 +185,7 @@ const TodoList = () => {
         {todos.length === 0 && (
           <Button
             className="btnadd me-5"
-            variant="info"
+            variant="info"  
             onClick={addDummyData}>
             Add Dummy Data
           </Button>
