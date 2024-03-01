@@ -168,7 +168,6 @@ const TodoList = () => {
       <h2 className="m-2 mt-3">Todo List</h2>
       {todos.length === 0 ? (
         <div className="empty-todos-message">
-          
           <div className="btns">
             <Button
               className="btnadd1 me-5 mb-3"
@@ -189,7 +188,9 @@ const TodoList = () => {
         </div>
       ) : (
         <>
-          <div className="custom-search">
+          {filteredTodos.length === 0 ? (
+            <>
+            <div className="custom-search">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
             <input
               type="text"
@@ -204,75 +205,98 @@ const TodoList = () => {
               </span>
             )}
           </div>
-
-          <div className="">
-            <Button
-              className="btnadd me-5"
-              as={NavLink}
-              to="/todoadd"
-              variant="success">
-              Add Todo
-            </Button>
-            <Button variant="danger" className="btndltall" onClick={deleteAll}>
-              Delete All
-            </Button>
-          </div>
-          <br />
-          <Table striped bordered hover>
-            <thead className="Heade">
-              <tr>
-                <th>No.</th>
-                <th onClick={() => handleSort("name")}>
-                  Name
-                  {sortOrder["name"] && (
-                    <span>{sortOrder["name"] === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th onClick={() => handleSort("email")}>
-                  Email
-                  {sortOrder["email"] && (
-                    <span>{sortOrder["email"] === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th onClick={() => handleSort("todo")}>
-                  Todo
-                  {sortOrder["todo"] && (
-                    <span>{sortOrder["todo"] === "asc" ? "▲" : "▼"}</span>
-                  )}
-                </th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentTodos.map((todo, index) => (
-                <tr key={todo.id}>
-                  <td>{indexOfFirstTodo + index + 1}</td>
-                  <td>{todo.name}</td>
-                  <td>{todo.email}</td>
-                  <td>{todo.todo}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      className="me-2"
-                      onClick={() => handleShowModal(todo)}>
-                      Delete
-                    </Button>
-                    <Link to={`/todoedit/${todo.id}`} state={{ todo: todo }}>
-                      <Button variant="warning">Edit</Button>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-          <div className="Pagen">
-            <Pagination
-              className="Pagination"
-              currentPage={currentPage}
-              totalPages={Math.ceil(filteredTodos.length / todosPerPage)}
-              paginate={paginate}
+            
+            <div className="empty-todos-message">
+              <p className="empt">No todos found !!</p>
+            </div>
+            </>
+          ) : (
+            <>
+              <div className="custom-search">
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
+            <input
+              type="text"
+              className="search"
+              placeholder="Search by name, email, or todo..."
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
+            {searchTerm && (
+              <span className="eraser" onClick={handleClearSearch}>
+                <FontAwesomeIcon icon={faEraser} className="icon" />
+              </span>
+            )}
           </div>
+              <div className="">
+                <Button
+                  className="btnadd me-5"
+                  as={NavLink}
+                  to="/todoadd"
+                  variant="success">
+                  Add Todo
+                </Button>
+                <Button variant="danger" className="btndltall" onClick={deleteAll}>
+                  Delete All
+                </Button>
+              </div>
+              <br />
+              <Table striped bordered hover>
+                <thead className="Heade">
+                  <tr>
+                    <th>No.</th>
+                    <th onClick={() => handleSort("name")}>
+                      Name
+                      {sortOrder["name"] && (
+                        <span>{sortOrder["name"] === "asc" ? "▲" : "▼"}</span>
+                      )}
+                    </th>
+                    <th onClick={() => handleSort("email")}>
+                      Email
+                      {sortOrder["email"] && (
+                        <span>{sortOrder["email"] === "asc" ? "▲" : "▼"}</span>
+                      )}
+                    </th>
+                    <th onClick={() => handleSort("todo")}>
+                      Todo
+                      {sortOrder["todo"] && (
+                        <span>{sortOrder["todo"] === "asc" ? "▲" : "▼"}</span>
+                      )}
+                    </th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentTodos.map((todo, index) => (
+                    <tr key={todo.id}>
+                      <td>{indexOfFirstTodo + index + 1}</td>
+                      <td>{todo.name}</td>
+                      <td>{todo.email}</td>
+                      <td>{todo.todo}</td>
+                      <td>
+                        <Button
+                          variant="danger"
+                          className="me-2"
+                          onClick={() => handleShowModal(todo)}>
+                          Delete
+                        </Button>
+                        <Link to={`/todoedit/${todo.id}`} state={{ todo: todo }}>
+                          <Button variant="warning">Edit</Button>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <div className="Pagen">
+                <Pagination
+                  className="Pagination"
+                  currentPage={currentPage}
+                  totalPages={Math.ceil(filteredTodos.length / todosPerPage)}
+                  paginate={paginate}
+                />
+              </div>
+            </>
+          )}
         </>
       )}
       <DeleteConfirmationModal
@@ -282,6 +306,7 @@ const TodoList = () => {
       />
     </div>
   );
+  
 };
 
 export default TodoList;
