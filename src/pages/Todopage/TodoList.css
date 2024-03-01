@@ -38,11 +38,9 @@
 
 @media screen and (max-width: 768px) {
     .custom-search {
-      align-items: center;
-      text-align: center;
+      align-content: center;
     }
   }
-  
 
   .custom-search{
     display: flex;
@@ -77,7 +75,7 @@
   
   .eraser {
     position: absolute;
-    top: 152px;
+    top: 122px;
     right: 30px;
     transform: translateY(-50%);
     cursor: pointer;

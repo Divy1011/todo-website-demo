@@ -80,10 +80,10 @@ const TodoList = () => {
     toast.success("All Todos deleted successfully!!");
   };
 
-  // Function to handle search input change
+  // This function takes input of search field and updates searchTerm state
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   // Function to clear search term
@@ -91,17 +91,52 @@ const TodoList = () => {
     setSearchTerm("");
   };
 
-  //This function is responsible for handling the sorting of todos based on a specified field ( name, email, todo).
+  // Function to handle sorting
   const handleSort = (field) => {
-    // If the field is already being sorted, toggle the sort order; otherwise, set it to ascending
     const newSortOrder = { ...sortOrder };
+    // If the field is already sorted, toggle the sorting order; otherwise, set it to ascending
     newSortOrder[field] = sortOrder[field] === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
   };
 
-  // Function to get filtered todos based on search term
-  const getFilteredTodos = () => {
-    return sortedFilteredTodos().filter(
+  
+  const sortedFilteredTodos = () => {
+    let sorted = [...todos];
+    // Sort based on the primary field
+    const primaryField = Object.keys(sortOrder)[0];
+    sorted = sorted.sort((a, b) => {
+      if (a[primaryField] < b[primaryField]) {
+        return sortOrder[primaryField] === "asc" ? -1 : 1;
+      }
+      if (a[primaryField] > b[primaryField]) {
+        return sortOrder[primaryField] === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    // Apply secondary sorting 
+    const secondaryField = Object.keys(sortOrder)[1];
+    if (secondaryField) {
+      sorted = sorted.sort((a, b) => {
+        if (a[secondaryField] !== b[secondaryField]) {
+          return sortOrder[secondaryField] === "asc" ? -1 : 1;
+        }
+        return 0;
+      });
+    }
+
+    // Apply tertiary sorting 
+    const thirdField = Object.keys(sortOrder)[2];
+    if (thirdField) {
+      sorted = sorted.sort((a, b) => {
+        if (a[thirdField] !== b[thirdField]) {
+          return sortOrder[thirdField] === "asc" ? -1 : 1;
+        }
+        return 0;
+      });
+    }
+
+    return sorted.filter(
       (todo) =>
         todo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         todo.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -114,31 +149,11 @@ const TodoList = () => {
     setCurrentPage(pageNumber);
   };
 
-  // Apply sorting for each field based on sortOrder
-  const sortedFilteredTodos = () => {
-    let sorted = [...todos];
-    Object.keys(sortOrder).forEach((field) => {
-      sorted = sorted.sort((a, b) => {
-        if (a[field] < b[field]) {
-          return sortOrder[field] === "asc" ? -1 : 1;
-        }
-        if (a[field] > b[field]) {
-          return sortOrder[field] === "asc" ? 1 : -1;
-        }
-        return 0;
-      });
-    });
-    return sorted;
-  };
-
   // Get current todos based on pagination and search term
-  const filteredTodos = getFilteredTodos();
+  const filteredTodos = sortedFilteredTodos();
   const indexOfLastTodo = currentPage * todosPerPage;
-  const indexOfFirstTodo = indexOfLastTodo - todosPerPage; // Adjusted index calculation
-  const currentTodos = filteredTodos.slice(
-    indexOfFirstTodo,
-    indexOfLastTodo
-  );
+  const indexOfFirstTodo = (currentPage - 1) * todosPerPage; // Adjusted index calculation
+  const currentTodos = filteredTodos.slice(indexOfFirstTodo, indexOfLastTodo);
 
   return (
     <div className="div">
@@ -187,7 +202,7 @@ const TodoList = () => {
             <th onClick={() => handleSort("email")}>
               Email
               {sortOrder["email"] && (
-                <span>{sortOrder["email"] === "asc" ? "▲" : "▼"}</span>
+                <span>{sortOrder["email"] === "desc" ? "▼" : "▲"}</span>
               )}
             </th>
             <th onClick={() => handleSort("todo")}>
@@ -202,7 +217,7 @@ const TodoList = () => {
         <tbody>
           {currentTodos.map((todo, index) => (
             <tr key={todo.id}>
-              <td>{indexOfFirstTodo + index + 1}</td> {/* Display adjusted index */}
+              <td>{indexOfFirstTodo + index + 1}</td>
               <td>{todo.name}</td>
               <td>{todo.email}</td>
               <td>{todo.todo}</td>
