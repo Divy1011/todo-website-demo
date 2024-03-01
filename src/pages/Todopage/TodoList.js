@@ -39,7 +39,7 @@ const TodoList = () => {
   // Generate dummy data
   const generateDummyData = () => {
     const dummyData = [];
-    for (let i = 1; i <= 100; i++) {
+    for (let i = 1; i <= 99; i++) {
       dummyData.push({
         id: i,
         name: `User ${i}`,
