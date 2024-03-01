@@ -2,13 +2,15 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const DeleteConfirmationModal = ({ show, handleClose, handleConfirm }) => {
+const DeleteConfirmationModal = ({ show, handleClose, handleConfirm, handleConfirmAll }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Confirm Deletion &#128533;</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Are you sure you want to delete this todo?</Modal.Body>
+      <Modal.Body>
+  {handleConfirmAll ? "Are you sure you want to delete all todos?" : "Are you sure you want to delete this todo?"}
+</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancel  &#10060;
