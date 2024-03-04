@@ -190,43 +190,49 @@ const TodoList = () => {
         <>
           {filteredTodos.length === 0 ? (
             <>
-            <div className="custom-search">
-            <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
-            <input
-              type="text"
-              className="search"
-              placeholder="Search by name, email, or todo..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            {searchTerm && (
-              <span className="eraser" onClick={handleClearSearch}>
-                <FontAwesomeIcon icon={faEraser} className="icon" />
-              </span>
-            )}
-          </div>
-            
-            <div className="empty-todos-message">
-              <p className="empt">No todos found !!</p>
-            </div>
+              <div className="custom-search">
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className="searchbtn"
+                />
+                <input
+                  type="text"
+                  className="search"
+                  placeholder="Search by name, email, or todo..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                {searchTerm && (
+                  <span className="eraser" onClick={handleClearSearch}>
+                    <FontAwesomeIcon icon={faEraser} className="icon" />
+                  </span>
+                )}
+              </div>
+
+              <div className="empty-todos-message">
+                <p className="empt">No todos found !!</p>
+              </div>
             </>
           ) : (
             <>
               <div className="custom-search">
-            <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbtn" />
-            <input
-              type="text"
-              className="search"
-              placeholder="Search by name, email, or todo..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            {searchTerm && (
-              <span className="eraser" onClick={handleClearSearch}>
-                <FontAwesomeIcon icon={faEraser} className="icon" />
-              </span>
-            )}
-          </div>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className="searchbtn"
+                />
+                <input
+                  type="text"
+                  className="search"
+                  placeholder="Search by name, email, or todo..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                {searchTerm && (
+                  <span className="eraser" onClick={handleClearSearch}>
+                    <FontAwesomeIcon icon={faEraser} className="icon" />
+                  </span>
+                )}
+              </div>
               <div className="">
                 <Button
                   className="btnadd me-5"
@@ -235,7 +241,10 @@ const TodoList = () => {
                   variant="success">
                   Add Todo
                 </Button>
-                <Button variant="danger" className="btndltall" onClick={deleteAll}>
+                <Button
+                  variant="danger"
+                  className="btndltall"
+                  onClick={deleteAll}>
                   Delete All
                 </Button>
               </div>
@@ -279,7 +288,9 @@ const TodoList = () => {
                           onClick={() => handleShowModal(todo)}>
                           Delete
                         </Button>
-                        <Link to={`/todoedit/${todo.id}`} state={{ todo: todo }}>
+                        <Link
+                          to={`/todoedit/${todo.id}`}
+                          state={{ todo: todo }}>
                           <Button variant="warning">Edit</Button>
                         </Link>
                       </td>
@@ -306,7 +317,6 @@ const TodoList = () => {
       />
     </div>
   );
-  
 };
 
 export default TodoList;

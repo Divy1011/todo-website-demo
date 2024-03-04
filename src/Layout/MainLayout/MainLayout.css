@@ -35,7 +35,7 @@
 }
 .main-content {
   overflow: auto;
-  margin-top: 20px;
+  margin-top: 60px;
   text-align: center;
   margin-left: 70px;
   transition: margin-left 0.3s ease;
