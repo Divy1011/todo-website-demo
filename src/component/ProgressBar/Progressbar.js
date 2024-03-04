@@ -16,7 +16,7 @@ function Progressbars() {
         }
         return newProgress;
       });
-    }, 20); // Update progress every 100 milliseconds
+    }, 40); // Update progress every 20 milliseconds
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
