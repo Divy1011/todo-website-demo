@@ -10,9 +10,13 @@ import { faEraser, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TodoList = () => {
-  // Set document title on component mount
+  // Set document title on component mount and get todos
   useEffect(() => {
     document.title = "TodoList";
+    const storedTodos = JSON.parse(localStorage.getItem("todos"));
+    if (storedTodos) {
+      setTodos(storedTodos);
+    }
   }, []);
 
   // State initialization
@@ -24,13 +28,6 @@ const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [todosPerPage] = useState(6);
 
-  // Load todos from localStorage on component mount
-  useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem("todos"));
-    if (storedTodos) {
-      setTodos(storedTodos);
-    }
-  }, []);
 
   // Function to add dummy data
   const addDummyData = () => {
