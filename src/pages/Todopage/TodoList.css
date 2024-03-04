@@ -84,7 +84,7 @@
   
   .eraser {
     position: absolute;
-    top: 130px;
+    top: 172px;
     right: 30px;
     transform: translateY(-50%);
     cursor: pointer;
@@ -113,11 +113,11 @@
   }
   @media screen and (max-width: 320px) {
     .eraser {
-      top:110px;
+      top:10px;
     }
   }
-  @media screen and (max-width: 374px) {
+  @media screen and (max-width: 424) {
     .eraser {
-      top: 70px;
+      top: 40px;
     }
   }

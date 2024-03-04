@@ -92,3 +92,11 @@
   height: 20px; 
   width: 20px;
 }
+
+.list{
+  text-overflow: ellipsis;
+  color: #c9c9c9;
+  text-transform: uppercase;
+  cursor: pointer;
+  
+}
