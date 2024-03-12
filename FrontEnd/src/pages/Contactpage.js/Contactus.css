@@ -1,0 +1,9 @@
+.phone {
+  margin-top: 90px;
+  font-size: 100px;
+}
+
+a:hover {
+  cursor: pointer;
+  color: rgb(27, 0, 89);
+}

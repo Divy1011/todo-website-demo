@@ -1,0 +1,21 @@
+.p1,.p2{
+    text-align: center;
+    color: red;
+    font-size: 40px;
+}
+.searchbar{
+    text-align: right;
+    margin-right: 70px;
+    margin-top: 50px;   
+}
+.eraser{
+    top: 135px;
+    right: 40px;
+}
+p{
+    font-weight: bolder;
+}
+
+.maindiv{
+    margin-top: 0;
+}

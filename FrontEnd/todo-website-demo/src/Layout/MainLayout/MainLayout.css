@@ -1,0 +1,93 @@
+.body {
+  height: 100vh;
+  width: 100%;
+  padding: 0%;
+  margin: 0%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.bar{
+  z-index: 1;
+  overflow: hidden;
+  position: sticky;
+}
+
+.main {
+  margin-top: 50px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  overflow: auto;
+}
+
+.sidemenu {
+  width: 13%;
+  margin-right: 10px;
+  position: relative;
+  overflow: auto;
+}
+
+
+.content {
+  cursor: text;
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+
+.header,
+.footer {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+
+.header {
+  height: 20px; /* Assuming header height is 20px */
+  top: 0;
+}
+
+.footer {
+  height: 60px; /* Assuming footer height is 60px */
+  bottom: -18px;
+}
+
+@media screen and (max-width: 768px) {
+  .sidemenu {
+    width: 10%; /* Adjust as needed */
+  } 
+}
+
+@media screen and (max-width: 622) {
+  .sidemenu {
+    width: 5%; /* Adjust as needed */
+  } 
+  .content{
+    font-size: xx-small !important;
+    flex-wrap: wrap;
+    min-width: 40px;
+  }
+  .content{
+    display: none !important ;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .footer{
+    display: none !important;
+  }
+  .content{
+    text-align: center;
+    margin-left: 20px;
+  }
+ 
+
+}
+
+@media screen and (max-width: 1800px) {
+  .content{
+    font-size: large; 
+  }
+}

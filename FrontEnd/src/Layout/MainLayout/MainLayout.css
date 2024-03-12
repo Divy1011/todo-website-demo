@@ -1,0 +1,48 @@
+.body {
+  height: 100%;
+  width: 100%;
+  padding: 0%;
+  margin: 0%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.bar {
+  z-index: 1;
+  overflow: hidden;
+}
+
+.header,
+.footer {
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+}
+
+.header {
+  height: 20px; /* Assuming header height is 20px */
+  top: 0;
+}
+
+.footer {
+  display: none;
+  height: 30px; /* Assuming footer height is 60px */
+  bottom: 0; /* Changed to 0 */
+}
+.main{
+  margin-top: 5px;
+}
+.main-content {
+  overflow: auto;
+  margin-top: 60px;
+  text-align: center;
+  margin-left: 70px;
+  transition: margin-left 0.3s ease;
+}
+
+@media screen and (max-width: 320px) {
+  .footer {
+    display: none !important;
+  }
+}

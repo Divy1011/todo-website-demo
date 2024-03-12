@@ -1,0 +1,17 @@
+/* TableComponent.css */
+.custom-table {
+    margin-top: 20px;
+  }
+  
+  .custom-table th {
+    cursor: pointer;
+  }
+  
+  .custom-table th.sorted {
+    color: #007bff; /* Change the color for sorted column header */
+  }
+  
+  .table{
+    background-color: black;
+    color: white;
+  }
