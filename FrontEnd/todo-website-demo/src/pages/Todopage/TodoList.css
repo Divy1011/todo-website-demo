@@ -1,0 +1,16 @@
+@media screen and (max-width: 320px) {
+    .div{
+        flex-wrap: wrap;
+        font-size: xx-small;
+    }
+    table{
+        font-size: 5px;
+        position: relative;
+        flex-wrap: wrap;
+    }
+    .Button{
+        height: 3px;
+        width: 10px;
+        font-size: x-small;
+    }
+}

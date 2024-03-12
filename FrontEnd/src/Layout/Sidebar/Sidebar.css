@@ -1,0 +1,102 @@
+.sidebar {
+  margin-top: 50px;
+  position: fixed;
+  width: 70px;
+  height: 100%;
+  background-color: #2a363b;
+  transition: width 0.3s ease;
+  border-right: 1px solid #4d606e;
+  padding-top: 15px;
+  z-index: 1;
+}
+
+.sidebar--open {
+  width: 200px;
+  transition: width 0.3s ease;
+}
+
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar--open + .main-content {
+  margin-left: 200px;
+}
+
+.trigger {
+  height: 50px;
+  width: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 10px; /* Adjusted left position */
+}
+
+
+.sidebar-position {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.sidebar--open .sidebar-position {
+  width: calc(100% - 50px); /* Adjusted width */
+}
+
+.sidebar-position > div {
+  margin-right: 10px;
+}
+
+.sidebar-position span {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #c9c9c9;
+  text-transform: uppercase;
+  display: none; /* Initially hide text */
+}
+
+.sidebar--open .sidebar-position span {
+  display: block; /* Show text when sidebar is open */
+  margin-top: 50px;
+  margin-left: 10px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sidebar svg {
+  margin-left: 10px;
+  text-align: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  color: #ffffff;
+  min-width: 35px;
+  height: 20px;
+  cursor: pointer;
+}
+
+#divm{
+  margin-top: 0px;
+  margin-left: 10px;
+  padding-bottom: 10px;
+  cursor: pointer; 
+  height: 20px; 
+  width: 20px;
+}
+
+.list{
+  text-overflow: ellipsis;
+  color: #c9c9c9;
+  text-transform: uppercase;
+  cursor: pointer;
+  
+}

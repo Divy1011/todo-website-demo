@@ -1,0 +1,18 @@
+.profile{
+    text-align: center;
+}
+.justify-content-end{
+    margin-right: 30px;
+}
+.it1,.it2{
+    background-color: transparent !important;
+}
+
+
+@media screen and (max-width: 320) {
+    .nav{
+        position: relative;
+        height: auto;
+        width: 100%;
+    }
+}

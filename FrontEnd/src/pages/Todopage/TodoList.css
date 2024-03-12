@@ -1,0 +1,123 @@
+@media screen and (max-width: 320px) {
+    .div{
+        flex-wrap: wrap;
+        font-size: xx-small;
+    }
+    table{
+        font-size: 5px;
+        position: relative;
+        flex-wrap: wrap;
+    }
+    .Button{
+        max-height: 3px;
+        width: 10px;
+        font-size: x-small;
+    };
+  
+}
+
+.btnadd{
+   text-align: right !important;
+}
+
+.custom-search{
+    margin-right: 150px;
+    text-align: right;
+}
+
+.search{
+    width: 300px;
+    border-radius: 5px;
+    height: 30px;
+
+}
+.eraser{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .custom-search {
+      align-content: center;
+    }
+  }
+  @media screen and (max-width: 535px) {
+    .div{
+      height: auto;
+      margin-bottom: 30px;
+    }
+    .Pagen{
+      margin-top: 50px;
+      display: block;
+    }
+  }
+  .custom-search{
+    display: flex;
+    justify-content: right;
+    height: 20px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+  }
+
+  .searchbtn{
+    margin-top: 5px;
+    margin-right: 10px;
+    height: 20px;
+  }
+  .Heade{
+    cursor: pointer;
+  }
+
+  .Pagen{
+    display: flex;
+    justify-content: left;
+    padding-bottom: 30px;
+      bottom: 70  px;
+      width: 100%;
+      z-index: 99; /* Ensure pagination stays above other content */
+  }
+  .search {
+    padding-right: 30px;
+     /* Adjust the padding to make space for the eraser icon */
+  }
+  
+  .eraser {
+    position: absolute;
+    top: 172px;
+    right: 30px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+  }
+  
+  .icon{
+    height: 22px;
+  }
+
+  .empt{
+    font-weight: bolder;
+    font-size: 25px;
+    margin-top: 100px;
+    color: red;
+  }
+  .empt1{
+    font-weight: bolder;
+    font-size: 25px;
+    color: green;
+  }
+
+  .btns{
+    margin-top: 70px;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 320px) {
+    .eraser {
+      top:10px;
+    }
+  }
+  @media screen and (max-width: 424) {
+    .eraser {
+      top: 40px;
+    }
+  }
